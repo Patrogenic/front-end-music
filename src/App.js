@@ -8,8 +8,8 @@ const params = new URLSearchParams(search);
 const access_token = params.get('access_token');
 const refresh_token = params.get('refresh_token');
 const email = params.get('email');
-const devAPI = "http://localhost:8080/";
-const prodAPI = "http://34.218.208.196/";
+const devAPI = "http://localhost:8080/api/";
+const prodAPI = "http://34.218.208.196/api";
 
 if(access_token){
   localStorage.setItem("access_token", access_token);
