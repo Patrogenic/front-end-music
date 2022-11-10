@@ -61,7 +61,12 @@ function App() {
   useEffect(() => {
     const getUser = async () => {
       const res = await axios.get(prodAPI + "user", getAuthHeader());
+
       console.log(res);
+      if(res.status !== 200){
+        alert("Please log back in")
+        return;
+      }
 
       if(res.data.user){
         setUser(res.data.user);
@@ -77,7 +82,7 @@ function App() {
   return (
     <div className="App">
       {!loading && <div>
-        {!user && <button onClick={login}>Login</button>}
+        <button onClick={login}>Login</button>
         
         <button onClick={getCurrentlyPlayingTrack}>Refresh currently playing song</button>
         <button onClick={getRecentlyPlayed}>Get Recently Played</button>
