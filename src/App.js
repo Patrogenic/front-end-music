@@ -8,6 +8,8 @@ const params = new URLSearchParams(search);
 const access_token = params.get('access_token');
 const refresh_token = params.get('refresh_token');
 const email = params.get('email');
+const devAPI = "http://localhost:8080/";
+const prodAPI = "http://34.218.208.196/";
 
 if(access_token){
   localStorage.setItem("access_token", access_token);
@@ -37,11 +39,11 @@ function App() {
   const [ loading, setLoading ] = useState(true);
 
   const login = async () => {
-    window.location.href = "http://localhost:8080/login";
+    window.location.href = prodAPI + "login";
   }
 
   const getCurrentlyPlayingTrack = async () => {
-    const res = await axios.get("http://localhost:8080/current_track", getAuthHeader());
+    const res = await axios.get(prodAPI + "current_track", getAuthHeader());
     
     if(res?.data?.data){
       setCurrSong(res.data.data.item.name)
@@ -49,7 +51,7 @@ function App() {
   }
 
   const getRecentlyPlayed = async () => {
-    const res = await axios.get("http://localhost:8080/recently_played", getAuthHeader());
+    const res = await axios.get(prodAPI + "recently_played", getAuthHeader());
 
     if(res?.data?.data){
       setRecentlyPlayed(res.data.data.items.map(item => item.track.name));
@@ -58,7 +60,7 @@ function App() {
 
   useEffect(() => {
     const getUser = async () => {
-      const res = await axios.get("http://localhost:8080/user", getAuthHeader());
+      const res = await axios.get(prodAPI + "user", getAuthHeader());
       console.log(res);
 
       if(res.data.user){
