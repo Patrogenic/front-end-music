@@ -74,9 +74,9 @@ const Login = ({ spotifyLogin }) => {
           <LoginTile text="Sign up with email" />
         </div>
       </div>
-      <div style={FooterStyle}>
+      {/* <div style={FooterStyle}>
           <img src="Footer.png" />
-        </div>
+        </div> */}
 
     </div>
   )
