@@ -5,26 +5,24 @@ import SongDetails from "./SongDetails";
 
 
 
-const FriendTile = ({ user, showSongDetails, setShowSongDetails }) => {
-
-
+const FriendTile = ({ user, text, showSongDetails, setShowSongDetails }) => {
   const viewSongDetails = () => {
     setShowSongDetails(true);
   }
 
+
+  const style = {
+    border: "1px lightgrey solid",
+    borderRadius: "5px",
+    margin: "10px",
+    padding: "10px",
+  }
+
   return (
-    <div>
+    <div style={style}>
       
-      {!showSongDetails && <div>
-        <div onClick={viewSongDetails} >Myself</div>
-        <div>Noah</div>
-        <div>Jackson</div>
-      </div>}
+      <div onClick={viewSongDetails} >{text}</div>
 
-      {showSongDetails && <SongDetails user={user} />}
-
-      {/* <div>Noah</div>
-      <div>Jackson</div> */}
       {/* There will be a tile that is just for me and we can navigate to it and see the song details */}
     </div>
   )

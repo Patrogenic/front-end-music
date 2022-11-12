@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useEffect, useRef, useState } from 'react';
 import './App.css';
 import Home from './Home';
+import Login from './Login';
 
 const search = window.location.search;
 const params = new URLSearchParams(search);
@@ -89,9 +90,13 @@ function App() {
 
   }, [])
 
+  const tempStyle = {
+    color: "black"
+  }
+
   return (
     <div className="App">
-      {/* {!loading && <div>
+      {/* {!loading && <div style={tempStyle}>
         <button onClick={login}>Login</button>
         
         <button onClick={getCurrentlyPlayingTrack}>Refresh currently playing song</button>
@@ -107,7 +112,9 @@ function App() {
       </div>} */}
 
 
-      <Home user={user} />
+      {!user && <Login spotifyLogin={login} />}
+      {user && <Home user={user} />}
+      {/* <Home user={user} /> */}
 
     </div>
   );

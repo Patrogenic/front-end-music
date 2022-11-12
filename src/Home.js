@@ -2,6 +2,7 @@ import { useState } from "react";
 import CurrentlyListeningHeader from "./CurrentlyListeningHeader";
 import FriendTile from "./FriendTile";
 import NavFooter from "./NavFooter";
+import SongDetails from "./SongDetails";
 
 
 const Home = ({ user }) => {
@@ -17,8 +18,15 @@ const Home = ({ user }) => {
   return(
     <div style={style} >
 
-      <CurrentlyListeningHeader />
-      <FriendTile user={user} showSongDetails={showSongDetails} setShowSongDetails={setShowSongDetails} />
+      
+
+      {!showSongDetails && <div>
+        <CurrentlyListeningHeader />
+        <FriendTile user={user} text="Myself" showSongDetails={showSongDetails} setShowSongDetails={setShowSongDetails} />
+        <FriendTile user={user} text="Noah" showSongDetails={showSongDetails} setShowSongDetails={setShowSongDetails} />
+        <FriendTile user={user} text="Jackson" showSongDetails={showSongDetails} setShowSongDetails={setShowSongDetails} />
+      </div>}
+      {showSongDetails && <SongDetails user={user} />}
       <NavFooter />
     </div>
   )
