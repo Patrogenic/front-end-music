@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import './App.css';
 import Home from './Home';
 
@@ -23,8 +23,6 @@ const getAuthHeader = () => {
   const token = localStorage.getItem('access_token');
   const email = localStorage.getItem('email');
 
-  console.log(token);
-
   if (token) {
     return { headers: { 'x-access-token': token, 'email': email }};
   } else {
@@ -35,8 +33,12 @@ const getAuthHeader = () => {
 function App() {
   const [ user, setUser ] = useState("");
   const [ currSong, setCurrSong ] = useState("");
+  const [ currSongTime, setCurrSongTime ] = useState("");
   const [ recentlyPlayed, setRecentlyPlayed ] = useState([]);
   const [ loading, setLoading ] = useState(true);
+  const intervalRef = useRef();
+
+  const songProgress = Math.round(currSongTime / 1000)
 
   const login = async () => {
     window.location.href = prodAPI + "login";
@@ -44,9 +46,12 @@ function App() {
 
   const getCurrentlyPlayingTrack = async () => {
     const res = await axios.get(prodAPI + "current_track", getAuthHeader());
-    
-    if(res?.data?.data){
+
+    if(res?.data?.data?.is_playing){
       setCurrSong(res.data.data.item.name)
+      setCurrSongTime(res.data.data.progress_ms)
+    }else{
+      setCurrSong("None")
     }
   }
 
@@ -76,12 +81,17 @@ function App() {
 
     getUser();
 
+    // clearInterval(intervalRef.current);
+    // intervalRef.current = setInterval(() => {
+    //   getCurrentlyPlayingTrack();
+    // }, 2000);
+
 
   }, [])
 
   return (
     <div className="App">
-      {!loading && <div>
+      {/* {!loading && <div>
         <button onClick={login}>Login</button>
         
         <button onClick={getCurrentlyPlayingTrack}>Refresh currently playing song</button>
@@ -90,13 +100,14 @@ function App() {
         {user && <div>Logged in as: {user}</div>}
         {!user && <div>Not logged in</div>}
         <div>Curr song: { currSong ? currSong : "None" }</div>
+        {currSong !== "None" && <div>Song Progress: {songProgress}s</div>} 
 
         {recentlyPlayed.map((song, i) => <div key={i}>{song}</div>)}
         
-      </div>}
+      </div>} */}
 
 
-      {/* <Home /> */}
+      <Home user={user} />
 
     </div>
   );
